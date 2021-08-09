@@ -50,7 +50,7 @@ from transformers.integrations import (
     run_hp_search_optuna,
     run_hp_search_ray,
 )
-from transformers.modeling_auto import MODEL_FOR_QUESTION_ANSWERING_MAPPING
+from transformers.models.auto.modeling_auto import MODEL_FOR_QUESTION_ANSWERING_MAPPING
 from transformers.modeling_utils import PreTrainedModel
 from transformers.optimization import AdamW, get_linear_schedule_with_warmup
 from transformers.tokenization_utils_base import PreTrainedTokenizerBase
