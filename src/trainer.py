@@ -329,7 +329,8 @@ class Trainer(transformers.Trainer):
         logging_loss_scalar = 0.0
         model.zero_grad()
         train_iterator = trange(
-            epochs_trained, int(num_train_epochs), desc="Epoch", disable=not self.is_local_master()
+            epochs_trained, int(num_train_epochs), desc="Epoch", disable=not self.is_local_process_zero()
+            #epochs_trained, int(num_train_epochs), desc="Epoch", disable=not self.is_local_master()
         )
         for epoch in train_iterator:
             if isinstance(train_dataloader, DataLoader) and isinstance(train_dataloader.sampler, DistributedSampler):
@@ -404,7 +405,8 @@ class Trainer(transformers.Trainer):
                     # ----------------------------------------------------------------------
 
                     metrics = None
-                    if self.args.evaluate_during_training and self.global_step % self.args.eval_steps == 0:
+                    # if self.args.evaluate_during_training and self.global_step % self.args.eval_steps == 0:
+                    if self.args.do_eval and self.global_step % self.args.eval_steps == 0:
                         output = self.evaluate()
                         metrics = output.metrics
                         objective = self.dev_objective(metrics)
